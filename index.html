@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -7,85 +8,293 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0f1923; --surface: #162030; --card: #1c2d40; --card2: #213245;
-  --accent: #00c8a0; --accent2: #0090d4; --warn: #f5a623; --danger: #ff6b6b;
-  --text: #e8f4f8; --muted: #7fa8c4; --border: #2a4560; --input-bg: #111e2c;
-  --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,0.4);
-  --morning: #f5a623; --afternoon: #00c8a0; --evening: #a78bfa;
+  --bg: #0f1923;
+  --surface: #162030;
+  --card: #1c2d40;
+  --card2: #213245;
+  --accent: #00c8a0;
+  --accent2: #0090d4;
+  --warn: #f5a623;
+  --danger: #ff6b6b;
+  --text: #e8f4f8;
+  --muted: #7fa8c4;
+  --border: #2a4560;
+  --input-bg: #111e2c;
+  --radius: 14px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --morning: #f5a623;
+  --afternoon: #00c8a0;
+  --evening: #a78bfa;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; padding-bottom: 100px; }
-.hero { background: linear-gradient(135deg, #0a3d5c 0%, #0f2a40 50%, #0d1e2e 100%); padding: 40px 24px 32px; text-align: center; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-.hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 50%,rgba(0,200,160,.07),transparent 60%), radial-gradient(ellipse at 70% 50%,rgba(0,144,212,.07),transparent 60%); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0a3d5c 0%, #0f2a40 50%, #0d1e2e 100%);
+  padding: 40px 24px 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content:'';position:absolute;inset:0;
+  background: radial-gradient(ellipse at 30% 50%,rgba(0,200,160,.07),transparent 60%),
+              radial-gradient(ellipse at 70% 50%,rgba(0,144,212,.07),transparent 60%);
+}
 .hero-tooth { font-size:48px; line-height:1; margin-bottom:14px; filter:drop-shadow(0 0 18px rgba(0,200,160,.4)); }
 .hero h1 { font-size:24px; font-weight:700; color:#fff; margin-bottom:6px; }
 .hero p { font-size:13px; color:var(--muted); line-height:1.6; }
-.stats-bar { position: sticky; top:0; z-index:100; background: rgba(15,25,35,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+
+/* ── STICKY STATS ── */
+.stats-bar {
+  position: sticky; top:0; z-index:100;
+  background: rgba(15,25,35,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+}
 .stat { text-align:center; }
 .stat-val { font-family:'DM Mono',monospace; font-size:18px; font-weight:500; color:var(--accent); }
 .stat-label { font-size:10px; color:var(--muted); margin-top:1px; }
+
+/* ── CONTAINER ── */
 .container { max-width: 780px; margin:0 auto; padding: 28px 18px 0; }
-.session { margin-bottom: 28px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); animation: slideIn .25s ease; }
+
+/* ── SESSION BLOCK ── */
+.session {
+  margin-bottom: 28px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  animation: slideIn .25s ease;
+}
 @keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-.session-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; position: relative; }
+
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
 .session-header.morning  { background: linear-gradient(135deg,rgba(245,166,35,.18),rgba(245,166,35,.06)); border-bottom: 2px solid rgba(245,166,35,.4); }
-.session-header.afternoon { background: linear-gradient(135deg,rgba(0,200,160,.18),rgba(0,200,160,.06)); border-bottom: 2px solid rgba(0,200,160,.4); }
+.session-header.afternoon{ background: linear-gradient(135deg,rgba(0,200,160,.18),rgba(0,200,160,.06)); border-bottom: 2px solid rgba(0,200,160,.4); }
 .session-header.evening  { background: linear-gradient(135deg,rgba(167,139,250,.18),rgba(167,139,250,.06)); border-bottom: 2px solid rgba(167,139,250,.4); }
 .session-header.unset    { background: var(--card2); border-bottom: 1px solid var(--border); }
-.shift-badge { padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+
+.shift-badge {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
 .morning  .shift-badge { background:rgba(245,166,35,.2);  color:var(--morning); }
 .afternoon .shift-badge { background:rgba(0,200,160,.2); color:var(--afternoon); }
 .evening  .shift-badge { background:rgba(167,139,250,.2); color:var(--evening); }
 .unset    .shift-badge { background:var(--border); color:var(--muted); }
+
 .session-meta { flex:1; min-width:0; }
 .session-date { font-size:14px; font-weight:700; color:var(--text); }
 .session-count { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; margin-top:2px; }
 .session-income { font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:var(--accent); white-space:nowrap; }
-.session-del { background:none; border:none; color:var(--danger); font-size:18px; cursor:pointer; padding:4px 8px; border-radius:6px; transition:background .2s; line-height:1; }
+
+.session-del {
+  background:none; border:none; color:var(--danger);
+  font-size:18px; cursor:pointer; padding:4px 8px;
+  border-radius:6px; transition:background .2s; line-height:1;
+}
 .session-del:hover { background:rgba(255,107,107,.12); }
-.session-setup { background: var(--card); padding: 18px; border-bottom: 1px solid var(--border); }
+
+/* Session setup panel */
+.session-setup {
+  background: var(--card);
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
 .setup-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
 .setup-field { display:flex; flex-direction:column; gap:6px; }
 .setup-field label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
 .setup-field input { background:var(--input-bg); border:1.5px solid var(--border); border-radius:10px; color:var(--text); font-family:'Noto Sans TC',sans-serif; font-size:14px; padding:9px 13px; outline:none; width:160px; }
 .setup-field input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,200,160,.12); }
+
 .shift-chips { display:flex; gap:6px; }
-.shift-chip { padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: 2px solid var(--border); background: var(--input-bg); color: var(--muted); transition: all .15s; user-select: none; }
+.shift-chip {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: var(--input-bg);
+  color: var(--muted);
+  transition: all .15s;
+  user-select: none;
+}
 .shift-chip:hover { border-color: var(--accent); }
 .shift-chip.morning.sel  { background:rgba(245,166,35,.15); border-color:var(--morning); color:var(--morning); }
-.shift-chip.afternoon.sel { background:rgba(0,200,160,.15); border-color:var(--afternoon); color:var(--afternoon); }
+.shift-chip.afternoon.sel{ background:rgba(0,200,160,.15); border-color:var(--afternoon); color:var(--afternoon); }
 .shift-chip.evening.sel  { background:rgba(167,139,250,.15); border-color:var(--evening); color:var(--evening); }
+
+/* ── RECORDS inside session ── */
 .session-records { background: var(--card); }
-.record-row { display: grid; grid-template-columns: 1fr 90px 110px 90px 110px 70px 80px 32px; gap: 8px; align-items: center; padding: 10px 18px; border-bottom: 1px solid rgba(42,69,96,.6); animation: fadeIn .2s ease; }
+
+.record-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 110px 90px 110px 70px 80px 32px;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(42,69,96,.6);
+  animation: fadeIn .2s ease;
+}
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 .record-row:last-child { border-bottom: none; }
+
 .rec-label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; padding:8px 18px 0; }
 .rec-labels { display:grid; grid-template-columns:1fr 90px 110px 90px 110px 70px 80px 32px; gap:8px; }
-input.rec, select.rec { background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'Noto Sans TC',sans-serif; font-size: 13px; padding: 8px 10px; outline: none; width: 100%; -webkit-appearance: none; }
-input.rec:focus, select.rec:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,200,160,.1); }
+
+input.rec, select.rec {
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  padding: 8px 10px;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+input.rec:focus, select.rec:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,200,160,.1);
+}
 select.rec { cursor:pointer; }
 select.rec.pay-self { border-color: rgba(245,166,35,.5); color: var(--warn); }
 select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
+
 .del-rec { background:none; border:none; color:var(--danger); font-size:16px; cursor:pointer; padding:4px; border-radius:6px; transition:background .2s; }
 .del-rec:hover { background:rgba(255,107,107,.12); }
-.add-rec-btn { display: flex; align-items: center; gap: 8px; padding: 11px 18px; background: none; border: none; border-top: 1px dashed var(--border); color: var(--accent); font-family: 'Noto Sans TC',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; transition: background .15s; }
+
+/* Add record button */
+.add-rec-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  background: none;
+  border: none;
+  border-top: 1px dashed var(--border);
+  color: var(--accent);
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background .15s;
+}
 .add-rec-btn:hover { background: rgba(0,200,160,.05); }
-.actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-.btn { border:none; border-radius:12px; font-family:'Noto Sans TC',sans-serif; font-size:14px; font-weight:700; cursor:pointer; padding:13px 24px; transition:all .2s; display:flex; align-items:center; gap:8px; flex:1; justify-content:center; }
-.btn-add-session { background: linear-gradient(135deg,rgba(0,200,160,.2),rgba(0,200,160,.08)); border: 1.5px solid rgba(0,200,160,.4); color: var(--accent); }
+
+/* ── BOTTOM ACTIONS ── */
+.actions {
+  display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;
+}
+.btn {
+  border:none; border-radius:12px;
+  font-family:'Noto Sans TC',sans-serif; font-size:14px; font-weight:700;
+  cursor:pointer; padding:13px 24px;
+  transition:all .2s;
+  display:flex; align-items:center; gap:8px;
+  flex:1; justify-content:center;
+}
+.btn-add-session {
+  background: linear-gradient(135deg,rgba(0,200,160,.2),rgba(0,200,160,.08));
+  border: 1.5px solid rgba(0,200,160,.4);
+  color: var(--accent);
+}
 .btn-add-session:hover { background:rgba(0,200,160,.15); }
-.btn-export { background: linear-gradient(135deg, var(--accent2), #006fa8); color: #fff; box-shadow: 0 4px 16px rgba(0,144,212,.25); }
+.btn-export {
+  background: linear-gradient(135deg, var(--accent2), #006fa8);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,144,212,.25);
+}
 .btn-export:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,144,212,.35); }
-.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1a3a2a; border:1px solid var(--accent); color:var(--accent); padding:12px 24px; border-radius:12px; font-size:14px; font-weight:500; opacity:0; pointer-events:none; transition:opacity .3s; z-index:9999; white-space:nowrap; }
+
+/* ── TOAST ── */
+.toast {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  background:#1a3a2a; border:1px solid var(--accent); color:var(--accent);
+  padding:12px 24px; border-radius:12px; font-size:14px; font-weight:500;
+  opacity:0; pointer-events:none; transition:opacity .3s; z-index:9999; white-space:nowrap;
+}
 .toast.show { opacity:1; }
-.save-indicator { position: fixed; top: 12px; right: 16px; z-index: 200; display: flex; align-items: center; gap: 6px; background: rgba(15,25,35,.85); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 11px; color: var(--muted); backdrop-filter: blur(8px); transition: all .3s; }
+
+/* ── SAVE INDICATOR ── */
+.save-indicator {
+  position: fixed; top: 12px; right: 16px; z-index: 200;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(15,25,35,.85); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 11px; color: var(--muted);
+  backdrop-filter: blur(8px);
+  transition: all .3s;
+}
 .save-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); transition:background .3s; }
 .save-indicator.saved .save-dot { background: var(--accent); }
 .save-indicator.saved { color: var(--accent); border-color: rgba(0,200,160,.3); }
-.btn-clear { background: linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.05)); border: 1.5px solid rgba(255,107,107,.3); color: var(--danger); flex: 0 0 auto; padding: 13px 18px; }
+
+/* ── CLEAR BTN ── */
+.btn-clear {
+  background: linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.05));
+  border: 1.5px solid rgba(255,107,107,.3);
+  color: var(--danger);
+  flex: 0 0 auto;
+  padding: 13px 18px;
+}
 .btn-clear:hover { background: rgba(255,107,107,.2); }
+
+/* ── CLINIC SELECTOR ── */
+.clinic-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.clinic-bar-inner { max-width: 780px; margin: 0 auto; display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+.clinic-field { display: flex; flex-direction: column; gap: 6px; }
+.clinic-field label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.clinic-select {
+  background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 10px;
+  color: var(--text); font-family: 'Noto Sans TC', sans-serif; font-size: 14px;
+  padding: 9px 13px; outline: none; cursor: pointer; -webkit-appearance: none; min-width: 140px;
+}
+.clinic-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,200,160,.12); }
+.clinic-select.set { border-color: rgba(0,200,160,.5); color: var(--accent); }
+.clinic-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,200,160,.1); border: 1px solid rgba(0,200,160,.3);
+  border-radius: 8px; padding: 4px 10px; font-size: 12px; color: var(--accent);
+  margin-top: 4px;
+}
+
+/* empty */
 .empty { text-align:center; padding:40px 24px; color:var(--muted); font-size:14px; }
 .empty-icon { font-size:36px; margin-bottom:10px; opacity:.4; }
+
 @media(max-width:600px){
   .record-row { grid-template-columns:1fr 80px 90px 80px 90px 60px 70px 28px; gap:6px; padding:8px 12px; }
   .rec-labels  { grid-template-columns:1fr 80px 90px 80px 90px 60px 70px 28px; }
@@ -96,17 +305,65 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
 </style>
 </head>
 <body>
+
 <div class="hero">
   <div class="hero-tooth">🦷</div>
-  <h1>一月看診業績記錄</h1>
+  <h1>看診業績記錄</h1>
   <p>以「診次」為單位填寫，日期和時段只需設定一次<br>填完後匯出 CSV 上傳給 Claude 分析</p>
 </div>
+
+<div class="clinic-bar">
+  <div class="clinic-bar-inner">
+    <div class="clinic-field">
+      <label>📅 月份</label>
+      <select class="clinic-select" id="selMonth" onchange="updateContext()">
+        <option value="">請選擇月份…</option>
+        <option value="2025-01">2025年 1月</option>
+        <option value="2025-02">2025年 2月</option>
+        <option value="2025-03">2025年 3月</option>
+        <option value="2025-04">2025年 4月</option>
+        <option value="2025-05">2025年 5月</option>
+        <option value="2025-06">2025年 6月</option>
+        <option value="2025-07">2025年 7月</option>
+        <option value="2025-08">2025年 8月</option>
+        <option value="2025-09">2025年 9月</option>
+        <option value="2025-10">2025年10月</option>
+        <option value="2025-11">2025年11月</option>
+        <option value="2025-12">2025年12月</option>
+        <option value="2026-01">2026年 1月</option>
+        <option value="2026-02">2026年 2月</option>
+        <option value="2026-03">2026年 3月</option>
+      </select>
+    </div>
+    <div class="clinic-field">
+      <label>🏥 診所</label>
+      <select class="clinic-select" id="selClinic" onchange="updateContext()">
+        <option value="">請選擇診所…</option>
+        <option value="診所A">診所A</option>
+        <option value="診所B">診所B</option>
+        <option value="診所C">診所C</option>
+        <option value="自行輸入">自行輸入</option>
+      </select>
+    </div>
+    <div class="clinic-field" id="customClinicField" style="display:none">
+      <label>診所名稱</label>
+      <input type="text" id="customClinicInput" placeholder="輸入診所名稱…"
+        style="background:var(--input-bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;padding:9px 13px;outline:none;width:140px;"
+        oninput="updateContext()">
+    </div>
+    <div id="contextTag" style="display:none">
+      <div class="clinic-tag" id="contextTagText">－</div>
+    </div>
+  </div>
+</div>
+
 <div class="stats-bar">
   <div class="stat"><div class="stat-val" id="sTotal">0</div><div class="stat-label">總筆數</div></div>
   <div class="stat"><div class="stat-val" id="sIncome">$0</div><div class="stat-label">總收入</div></div>
   <div class="stat"><div class="stat-val" id="sHours">0h</div><div class="stat-label">總時長</div></div>
   <div class="stat"><div class="stat-val" id="sSessions">0</div><div class="stat-label">診次數</div></div>
 </div>
+
 <div class="container">
   <div id="sessionsContainer">
     <div class="empty" id="emptyState">
@@ -114,116 +371,238 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
       點擊「新增診次」，選擇日期與時段後開始填寫
     </div>
   </div>
+
   <div class="actions">
     <button class="btn btn-add-session" onclick="addSession()">＋ 新增診次</button>
     <button class="btn btn-export" onclick="exportCSV()">⬇ 匯出 CSV</button>
-    <button class="btn btn-clear" onclick="clearAll()">🗑</button>
+    <button class="btn btn-clear" onclick="clearAll()" title="清除所有資料">🗑</button>
   </div>
 </div>
+
 <div class="save-indicator" id="saveIndicator">
   <div class="save-dot"></div>
   <span id="saveLabel">尚未儲存</span>
 </div>
+
 <div class="toast" id="toast">✅ CSV 已下載，請上傳給 Claude 分析！</div>
+
 <script>
-const ITEMS = ["補牙","根管治療","假牙製作","手術","拔智齒","洗牙","矯正","植牙","其他"];
+const ITEMS = [
+  "補牙","根管治療",
+  "假牙-印模","假牙-裝戴",
+  "手術","拔智齒","洗牙","矯正",
+  "植牙-手術","植牙-二階","植牙-假牙印模","植牙-假牙裝戴",
+  "其他"
+];
 const SHIFTS = { morning:'早診', afternoon:'午診', evening:'晚診' };
 const PAY_OPTS = ['自費','健保','混合'];
-const STORAGE_KEY = 'dental_jan_v2';
-let sessions = [], sId = 0, rId = 0, saveTimer = null;
+const STORAGE_KEY = 'dental_records_v3';
 
+let sessions = [], sId = 0, rId = 0, saveTimer = null;
+let currentMonth = '', currentClinic = '';
+
+function updateContext() {
+  const monthEl = document.getElementById('selMonth');
+  const clinicEl = document.getElementById('selClinic');
+  const customField = document.getElementById('customClinicField');
+  const customInput = document.getElementById('customClinicInput');
+
+  currentMonth = monthEl.value;
+
+  if (clinicEl.value === '自行輸入') {
+    customField.style.display = 'flex';
+    currentClinic = customInput.value.trim() || '';
+  } else {
+    customField.style.display = 'none';
+    currentClinic = clinicEl.value;
+  }
+
+  // Style selects when set
+  monthEl.classList.toggle('set', !!currentMonth);
+  clinicEl.classList.toggle('set', !!clinicEl.value);
+
+  // Show tag
+  const tag = document.getElementById('contextTag');
+  const tagText = document.getElementById('contextTagText');
+  if (currentMonth || currentClinic) {
+    tag.style.display = 'block';
+    const mLabel = monthEl.options[monthEl.selectedIndex]?.text || '';
+    tagText.textContent = [mLabel, currentClinic].filter(Boolean).join(' · ');
+  } else {
+    tag.style.display = 'none';
+  }
+  save();
+}
+
+// ── STORAGE ──────────────────────────────────────────────────────
 function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ sessions, sId, rId })); } catch(e) {}
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ sessions, sId, rId, currentMonth, currentClinic }));
+  } catch(e) {}
   const ind = document.getElementById('saveIndicator');
   const lbl = document.getElementById('saveLabel');
   if (!ind) return;
-  ind.classList.add('saved'); lbl.textContent = '已自動儲存';
+  ind.classList.add('saved');
+  lbl.textContent = '已自動儲存';
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => { ind.classList.remove('saved'); lbl.textContent = '資料已保存'; }, 2000);
 }
+
 function loadFromStorage() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return false;
     const data = JSON.parse(raw);
-    sessions = data.sessions || []; sId = data.sId || 0; rId = data.rId || 0;
-    return sessions.length > 0;
+    sessions = data.sessions || [];
+    sId = data.sId || 0;
+    rId = data.rId || 0;
+    currentMonth = data.currentMonth || '';
+    currentClinic = data.currentClinic || '';
+    return true;
   } catch(e) { return false; }
 }
+
+function restoreContext() {
+  if (currentMonth) {
+    const monthEl = document.getElementById('selMonth');
+    if (monthEl) { monthEl.value = currentMonth; monthEl.classList.add('set'); }
+  }
+  if (currentClinic) {
+    const clinicEl = document.getElementById('selClinic');
+    if (clinicEl) {
+      const opt = Array.from(clinicEl.options).find(o => o.value === currentClinic);
+      if (opt) { clinicEl.value = currentClinic; clinicEl.classList.add('set'); }
+      else {
+        clinicEl.value = '自行輸入';
+        document.getElementById('customClinicField').style.display = 'flex';
+        document.getElementById('customClinicInput').value = currentClinic;
+      }
+    }
+    const tag = document.getElementById('contextTag');
+    const tagText = document.getElementById('contextTagText');
+    if (tag && tagText) {
+      tag.style.display = 'block';
+      const monthEl = document.getElementById('selMonth');
+      const mLabel = monthEl?.options[monthEl.selectedIndex]?.text || '';
+      tagText.textContent = [mLabel, currentClinic].filter(Boolean).join(' · ');
+    }
+  }
+}
+
 function clearAll() {
   if (!confirm('確定要清除所有資料嗎？此動作無法復原。')) return;
   sessions = []; sId = 0; rId = 0;
   localStorage.removeItem(STORAGE_KEY);
   document.querySelectorAll('.session').forEach(el => el.remove());
   updateStats();
-  document.getElementById('saveLabel').textContent = '資料已清除';
+  const lbl = document.getElementById('saveLabel');
+  if (lbl) lbl.textContent = '資料已清除';
 }
+
+// ── SESSION ───────────────────────────────────────────────────────
 function addSession() {
   const id = ++sId;
-  sessions.push({ id, date: new Date().toISOString().split('T')[0], shift: '', records: [] });
+  const dateStr = new Date().toISOString().split('T')[0];
+  sessions.push({ id, date: dateStr, shift: '', records: [] });
   renderAll();
   setTimeout(() => document.getElementById(`session-${id}`)?.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
-  addRecord(id); save();
+  addRecord(id);
+  save();
 }
+
 function deleteSession(id) {
   if (!confirm('確定刪除這個診次及其所有記錄？')) return;
-  sessions = sessions.filter(s => s.id !== id); renderAll(); save();
+  sessions = sessions.filter(s => s.id !== id);
+  renderAll();
+  save();
 }
+
 function setShift(sid, shift) {
   const s = sessions.find(s => s.id === sid);
   if (s) s.shift = shift;
   const hdr = document.getElementById(`session-${sid}`)?.querySelector('.session-header');
-  if (hdr) { hdr.className = 'session-header ' + (shift||'unset'); hdr.querySelector('.shift-badge').textContent = SHIFTS[shift]||'未選時段'; }
-  ['morning','afternoon','evening'].forEach(k => document.getElementById(`chip-${k}-${sid}`)?.classList.toggle('sel', k===shift));
-  updateStats(); save();
+  if (hdr) {
+    hdr.className = 'session-header ' + (shift || 'unset');
+    hdr.querySelector('.shift-badge').textContent = SHIFTS[shift] || '未選時段';
+  }
+  ['morning','afternoon','evening'].forEach(k => {
+    document.getElementById(`chip-${k}-${sid}`)?.classList.toggle('sel', k === shift);
+  });
+  updateStats();
+  save();
 }
+
 function setDate(sid, val) {
   const s = sessions.find(s => s.id === sid);
-  if (s) s.date = val; updateSessionMeta(sid); updateStats(); save();
+  if (s) s.date = val;
+  updateSessionMeta(sid);
+  updateStats();
+  save();
 }
+
+// ── RECORD ───────────────────────────────────────────────────────
 function addRecord(sid) {
   const s = sessions.find(s => s.id === sid);
   if (!s) return;
-  s.records.push({ id: ++rId, item:'', pay:'', mins:'', income:'', location:'', teeth:'', visit:'' });
-  renderRecords(sid); updateStats(); save();
+  const id = ++rId;
+  s.records.push({ id, item:'', pay:'', mins:'', income:'', location:'', teeth:'', visit:'' });
+  renderRecords(sid);
+  updateStats();
+  save();
 }
+
 function deleteRecord(sid, rid) {
   const s = sessions.find(s => s.id === sid);
   if (!s) return;
-  s.records = s.records.filter(r => r.id !== rid); renderRecords(sid); updateStats(); save();
+  s.records = s.records.filter(r => r.id !== rid);
+  renderRecords(sid);
+  updateStats();
+  save();
 }
+
 function updateRecord(sid, rid, field, value) {
   const s = sessions.find(s => s.id === sid);
   if (!s) return;
   const r = s.records.find(r => r.id === rid);
   if (r) r[field] = value;
-  if (field==='income'||field==='mins') updateStats();
-  updateSessionMeta(sid); save();
+  if (field === 'income' || field === 'mins') updateStats();
+  updateSessionMeta(sid);
+  save();
 }
+
+// ── UI UPDATES ────────────────────────────────────────────────────
 function updateSessionMeta(sid) {
   const s = sessions.find(s => s.id === sid);
   if (!s) return;
   const countEl = document.getElementById(`count-${sid}`);
   const incEl = document.getElementById(`inc-${sid}`);
   if (!countEl) return;
-  const total = s.records.reduce((a,r) => a+(parseFloat(r.income)||0), 0);
+  const total = s.records.reduce((a,r) => a + (parseFloat(r.income)||0), 0);
   countEl.textContent = `${s.date||'未選日期'} ${SHIFTS[s.shift]||'未選時段'} · ${s.records.length} 筆`;
-  if (incEl) incEl.textContent = total ? '$'+total.toLocaleString() : '';
+  if (incEl) incEl.textContent = total ? '$' + total.toLocaleString() : '';
 }
+
 function updateStats() {
   let total=0, income=0, mins=0;
-  sessions.forEach(s => s.records.forEach(r => { total++; income+=parseFloat(r.income)||0; mins+=parseFloat(r.mins)||0; }));
+  sessions.forEach(s => s.records.forEach(r => {
+    total++; income += parseFloat(r.income)||0; mins += parseFloat(r.mins)||0;
+  }));
   document.getElementById('sTotal').textContent = total;
-  document.getElementById('sIncome').textContent = '$'+income.toLocaleString();
+  document.getElementById('sIncome').textContent = '$' + income.toLocaleString();
   document.getElementById('sHours').textContent = mins>=60 ? (mins/60).toFixed(1)+'h' : mins+'m';
   document.getElementById('sSessions').textContent = sessions.length;
   document.getElementById('emptyState').style.display = sessions.length ? 'none' : 'block';
 }
+
+// ── RENDER ────────────────────────────────────────────────────────
 function renderAll() {
   sessions.forEach(s => { if (!document.getElementById(`session-${s.id}`)) renderSession(s); });
-  document.querySelectorAll('.session').forEach(el => { if (!sessions.find(s => s.id==el.dataset.sid)) el.remove(); });
+  document.querySelectorAll('.session').forEach(el => {
+    if (!sessions.find(s => s.id == el.dataset.sid)) el.remove();
+  });
   updateStats();
 }
+
 function renderSession(s) {
   const container = document.getElementById('sessionsContainer');
   const div = document.createElement('div');
@@ -247,9 +626,9 @@ function renderSession(s) {
         <div class="setup-field">
           <label>時段</label>
           <div class="shift-chips">
-            <div class="shift-chip morning ${s.shift==='morning'?'sel':''}" id="chip-morning-${s.id}" onclick="setShift(${s.id},'morning')">☀️ 早診</div>
+            <div class="shift-chip morning ${s.shift==='morning'?'sel':''}"   id="chip-morning-${s.id}"   onclick="setShift(${s.id},'morning')">☀️ 早診</div>
             <div class="shift-chip afternoon ${s.shift==='afternoon'?'sel':''}" id="chip-afternoon-${s.id}" onclick="setShift(${s.id},'afternoon')">🌤 午診</div>
-            <div class="shift-chip evening ${s.shift==='evening'?'sel':''}" id="chip-evening-${s.id}" onclick="setShift(${s.id},'evening')">🌙 晚診</div>
+            <div class="shift-chip evening ${s.shift==='evening'?'sel':''}"   id="chip-evening-${s.id}"   onclick="setShift(${s.id},'evening')">🌙 晚診</div>
           </div>
         </div>
       </div>
@@ -262,8 +641,10 @@ function renderSession(s) {
     <div class="session-records" id="records-${s.id}"></div>
     <button class="add-rec-btn" onclick="addRecord(${s.id})">＋ 新增治療項目</button>
   `;
-  container.appendChild(div); renderRecords(s.id);
+  container.appendChild(div);
+  renderRecords(s.id);
 }
+
 function renderRecords(sid) {
   const s = sessions.find(s => s.id === sid);
   const container = document.getElementById(`records-${sid}`);
@@ -275,20 +656,30 @@ function renderRecords(sid) {
     row.innerHTML = `
       <select class="rec" onchange="updateRecord(${sid},${r.id},'item',this.value)">
         <option value="">選擇項目…</option>
-        ${ITEMS.map(it=>`<option value="${it}" ${r.item===it?'selected':''}>${it}</option>`).join('')}
+        ${ITEMS.map(it => `<option value="${it}" ${r.item===it?'selected':''}>${it}</option>`).join('')}
       </select>
       <select class="rec ${r.pay==='自費'?'pay-self':r.pay==='健保'?'pay-ins':''}"
         onchange="this.className='rec '+(this.value==='自費'?'pay-self':this.value==='健保'?'pay-ins':'');updateRecord(${sid},${r.id},'pay',this.value)">
         <option value="">費用…</option>
         ${PAY_OPTS.map(p=>`<option value="${p}" ${r.pay===p?'selected':''}>${p}</option>`).join('')}
       </select>
-      <input class="rec" type="number" min="1" placeholder="分鐘" value="${r.mins}" oninput="updateRecord(${sid},${r.id},'mins',this.value)">
-      <input class="rec" type="number" min="0" placeholder="金額" value="${r.income}" oninput="updateRecord(${sid},${r.id},'income',this.value)">
+      <input class="rec" type="number" min="1" placeholder="分鐘" value="${r.mins}"
+        oninput="updateRecord(${sid},${r.id},'mins',this.value)">
+      <input class="rec" type="number" min="0" placeholder="金額" value="${r.income}"
+        oninput="updateRecord(${sid},${r.id},'income',this.value)">
       <select class="rec" onchange="updateRecord(${sid},${r.id},'location',this.value)">
         <option value="">部位…</option>
-        ${['右上','右下','左上','左下','全口','上顎','下顎','其他'].map(v=>`<option value="${v}" ${r.location===v?'selected':''}>${v}</option>`).join('')}
+        <option value="右上" ${r.location==='右上'?'selected':''}>右上</option>
+        <option value="右下" ${r.location==='右下'?'selected':''}>右下</option>
+        <option value="左上" ${r.location==='左上'?'selected':''}>左上</option>
+        <option value="左下" ${r.location==='左下'?'selected':''}>左下</option>
+        <option value="全口" ${r.location==='全口'?'selected':''}>全口</option>
+        <option value="上顎" ${r.location==='上顎'?'selected':''}>上顎</option>
+        <option value="下顎" ${r.location==='下顎'?'selected':''}>下顎</option>
+        <option value="其他" ${r.location==='其他'?'selected':''}>其他</option>
       </select>
-      <input class="rec" type="number" min="0" placeholder="顆數" value="${r.teeth}" style="text-align:center" oninput="updateRecord(${sid},${r.id},'teeth',this.value)">
+      <input class="rec" type="number" min="0" placeholder="顆數" value="${r.teeth}"
+        style="text-align:center" oninput="updateRecord(${sid},${r.id},'teeth',this.value)">
       <select class="rec" onchange="updateRecord(${sid},${r.id},'visit',this.value)">
         <option value="">－</option>
         <option value="初診" ${r.visit==='初診'?'selected':''}>初診</option>
@@ -300,25 +691,34 @@ function renderRecords(sid) {
   });
   updateSessionMeta(sid);
 }
+
+// ── EXPORT ────────────────────────────────────────────────────────
 function exportCSV() {
   const rows = [];
   sessions.forEach(s => s.records.forEach(r => {
-    rows.push([s.date, SHIFTS[s.shift]||'', r.item, r.pay, r.mins, r.income, r.location||'', r.teeth||'', r.visit]);
+    rows.push([currentMonth, currentClinic, s.date, SHIFTS[s.shift]||'', r.item, r.pay, r.mins, r.income, r.location||'', r.teeth||'', r.visit]);
   }));
   if (!rows.length) { alert('請先新增至少一筆記錄！'); return; }
-  const headers = ['日期','時段','治療項目','自費/健保','工作時長(分鐘)','收入(元)','部位','牙齒數目','初診/複診'];
+  const headers = ['月份','診所','日期','時段','治療項目','自費/健保','工作時長(分鐘)','收入(元)','部位','牙齒數目','初診/複診'];
   const csv = '\uFEFF' + [headers,...rows].map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
+  const filename = [currentMonth, currentClinic, '看診業績'].filter(Boolean).join('_') + '.csv';
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download = '牙醫一月業績資料.csv'; a.click();
+  a.download = filename; a.click();
   const toast = document.getElementById('toast');
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'), 3000);
 }
+
+// ── INIT ──────────────────────────────────────────────────────────
 if (loadFromStorage()) {
-  renderAll();
-  sessions.forEach(s => { if (s.shift) setShift(s.id, s.shift); updateSessionMeta(s.id); });
-  document.getElementById('saveLabel').textContent = `已載入 ${sessions.length} 個診次`;
+  restoreContext();
+  if (sessions.length > 0) {
+    renderAll();
+    sessions.forEach(s => { if (s.shift) setShift(s.id, s.shift); updateSessionMeta(s.id); });
+  }
+  const lbl = document.getElementById('saveLabel');
+  if (lbl) lbl.textContent = sessions.length > 0 ? `已載入 ${sessions.length} 個診次` : '資料已保存';
 }
 </script>
 </body>
