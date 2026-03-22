@@ -9,4 +9,501 @@
 :root {
   --bg: #0f1923;
   --surface: #162030;
-  --card: #1c2d40​​​​​​​​​​​​​​​​
+  --card: #1c2d40;
+  --card2: #213245;
+  --accent: #00c8a0;
+  --accent2: #0090d4;
+  --warn: #f5a623;
+  --danger: #ff6b6b;
+  --text: #e8f4f8;
+  --muted: #7fa8c4;
+  --border: #2a4560;
+  --input-bg: #111e2c;
+  --radius: 14px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --morning: #f5a623;
+  --afternoon: #00c8a0;
+  --evening: #a78bfa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+.hero {
+  background: linear-gradient(135deg, #0a3d5c 0%, #0f2a40 50%, #0d1e2e 100%);
+  padding: 40px 24px 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content:'';position:absolute;inset:0;
+  background: radial-gradient(ellipse at 30% 50%,rgba(0,200,160,.07),transparent 60%),
+              radial-gradient(ellipse at 70% 50%,rgba(0,144,212,.07),transparent 60%);
+}
+.hero-tooth { font-size:48px; line-height:1; margin-bottom:14px; filter:drop-shadow(0 0 18px rgba(0,200,160,.4)); }
+.hero h1 { font-size:24px; font-weight:700; color:#fff; margin-bottom:6px; }
+.hero p { font-size:13px; color:var(--muted); line-height:1.6; }
+.stats-bar {
+  position: sticky; top:0; z-index:100;
+  background: rgba(15,25,35,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+}
+.stat { text-align:center; }
+.stat-val { font-family:'DM Mono',monospace; font-size:18px; font-weight:500; color:var(--accent); }
+.stat-label { font-size:10px; color:var(--muted); margin-top:1px; }
+.container { max-width: 780px; margin:0 auto; padding: 28px 18px 0; }
+.session {
+  margin-bottom: 28px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  animation: slideIn .25s ease;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.session-header.morning  { background: linear-gradient(135deg,rgba(245,166,35,.18),rgba(245,166,35,.06)); border-bottom: 2px solid rgba(245,166,35,.4); }
+.session-header.afternoon{ background: linear-gradient(135deg,rgba(0,200,160,.18),rgba(0,200,160,.06)); border-bottom: 2px solid rgba(0,200,160,.4); }
+.session-header.evening  { background: linear-gradient(135deg,rgba(167,139,250,.18),rgba(167,139,250,.06)); border-bottom: 2px solid rgba(167,139,250,.4); }
+.session-header.unset    { background: var(--card2); border-bottom: 1px solid var(--border); }
+.shift-badge {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.morning  .shift-badge { background:rgba(245,166,35,.2);  color:var(--morning); }
+.afternoon .shift-badge { background:rgba(0,200,160,.2); color:var(--afternoon); }
+.evening  .shift-badge { background:rgba(167,139,250,.2); color:var(--evening); }
+.unset    .shift-badge { background:var(--border); color:var(--muted); }
+.session-meta { flex:1; min-width:0; }
+.session-date { font-size:14px; font-weight:700; color:var(--text); }
+.session-count { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; margin-top:2px; }
+.session-income { font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:var(--accent); white-space:nowrap; }
+.session-del {
+  background:none; border:none; color:var(--danger);
+  font-size:18px; cursor:pointer; padding:4px 8px;
+  border-radius:6px; transition:background .2s; line-height:1;
+}
+.session-del:hover { background:rgba(255,107,107,.12); }
+.session-setup {
+  background: var(--card);
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.setup-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+.setup-field { display:flex; flex-direction:column; gap:6px; }
+.setup-field label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.setup-field input { background:var(--input-bg); border:1.5px solid var(--border); border-radius:10px; color:var(--text); font-family:'Noto Sans TC',sans-serif; font-size:14px; padding:9px 13px; outline:none; width:160px; }
+.setup-field input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,200,160,.12); }
+.shift-chips { display:flex; gap:6px; }
+.shift-chip {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: var(--input-bg);
+  color: var(--muted);
+  transition: all .15s;
+  user-select: none;
+}
+.shift-chip:hover { border-color: var(--accent); }
+.shift-chip.morning.sel  { background:rgba(245,166,35,.15); border-color:var(--morning); color:var(--morning); }
+.shift-chip.afternoon.sel{ background:rgba(0,200,160,.15); border-color:var(--afternoon); color:var(--afternoon); }
+.shift-chip.evening.sel  { background:rgba(167,139,250,.15); border-color:var(--evening); color:var(--evening); }
+.session-records { background: var(--card); }
+.record-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 110px 90px 90px 80px 32px;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(42,69,96,.6);
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.record-row:last-child { border-bottom: none; }
+.rec-label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; padding:8px 18px 0; }
+.rec-labels { display:grid; grid-template-columns:1fr 90px 110px 90px 90px 80px 32px; gap:8px; }
+input.rec, select.rec {
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  padding: 8px 10px;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+input.rec:focus, select.rec:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,200,160,.1);
+}
+select.rec { cursor:pointer; }
+select.rec.pay-self { border-color: rgba(245,166,35,.5); color: var(--warn); }
+select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
+.del-rec { background:none; border:none; color:var(--danger); font-size:16px; cursor:pointer; padding:4px; border-radius:6px; transition:background .2s; }
+.del-rec:hover { background:rgba(255,107,107,.12); }
+.add-rec-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  background: none;
+  border: none;
+  border-top: 1px dashed var(--border);
+  color: var(--accent);
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background .15s;
+}
+.add-rec-btn:hover { background: rgba(0,200,160,.05); }
+.actions {
+  display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;
+}
+.btn {
+  border:none; border-radius:12px;
+  font-family:'Noto Sans TC',sans-serif; font-size:14px; font-weight:700;
+  cursor:pointer; padding:13px 24px;
+  transition:all .2s;
+  display:flex; align-items:center; gap:8px;
+  flex:1; justify-content:center;
+}
+.btn-add-session {
+  background: linear-gradient(135deg,rgba(0,200,160,.2),rgba(0,200,160,.08));
+  border: 1.5px solid rgba(0,200,160,.4);
+  color: var(--accent);
+}
+.btn-add-session:hover { background:rgba(0,200,160,.15); }
+.btn-export {
+  background: linear-gradient(135deg, var(--accent2), #006fa8);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,144,212,.25);
+}
+.btn-export:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,144,212,.35); }
+.toast {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  background:#1a3a2a; border:1px solid var(--accent); color:var(--accent);
+  padding:12px 24px; border-radius:12px; font-size:14px; font-weight:500;
+  opacity:0; pointer-events:none; transition:opacity .3s; z-index:9999; white-space:nowrap;
+}
+.toast.show { opacity:1; }
+.save-indicator {
+  position: fixed; top: 12px; right: 16px; z-index: 200;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(15,25,35,.85); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 11px; color: var(--muted);
+  backdrop-filter: blur(8px);
+  transition: all .3s;
+}
+.save-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); transition:background .3s; }
+.save-indicator.saved .save-dot { background: var(--accent); }
+.save-indicator.saved { color: var(--accent); border-color: rgba(0,200,160,.3); }
+.btn-clear {
+  background: linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.05));
+  border: 1.5px solid rgba(255,107,107,.3);
+  color: var(--danger);
+  flex: 0 0 auto;
+  padding: 13px 18px;
+}
+.btn-clear:hover { background: rgba(255,107,107,.2); }
+.empty { text-align:center; padding:40px 24px; color:var(--muted); font-size:14px; }
+.empty-icon { font-size:36px; margin-bottom:10px; opacity:.4; }
+@media(max-width:600px){
+  .record-row { grid-template-columns:1fr 80px 90px 80px 80px 70px 28px; gap:6px; padding:8px 12px; }
+  .rec-labels  { grid-template-columns:1fr 80px 90px 80px 80px 70px 28px; }
+  .stats-bar { grid-template-columns:repeat(2,1fr); }
+  .session-setup { padding:14px 12px; }
+  .setup-field input { width:130px; }
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-tooth">🦷</div>
+  <h1>一月看診業績記錄</h1>
+  <p>以「診次」為單位填寫，日期和時段只需設定一次<br>填完後匯出 CSV 上傳給 Claude 分析</p>
+</div>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-val" id="sTotal">0</div><div class="stat-label">總筆數</div></div>
+  <div class="stat"><div class="stat-val" id="sIncome">$0</div><div class="stat-label">總收入</div></div>
+  <div class="stat"><div class="stat-val" id="sHours">0h</div><div class="stat-label">總時長</div></div>
+  <div class="stat"><div class="stat-val" id="sSessions">0</div><div class="stat-label">診次數</div></div>
+</div>
+<div class="container">
+  <div id="sessionsContainer">
+    <div class="empty" id="emptyState">
+      <div class="empty-icon">🗓</div>
+      點擊「新增診次」，選擇日期與時段後開始填寫
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-add-session" onclick="addSession()">＋ 新增診次</button>
+    <button class="btn btn-export" onclick="exportCSV()">⬇ 匯出 CSV</button>
+    <button class="btn btn-clear" onclick="clearAll()" title="清除所有資料">🗑</button>
+  </div>
+</div>
+<div class="save-indicator" id="saveIndicator">
+  <div class="save-dot"></div>
+  <span id="saveLabel">尚未儲存</span>
+</div>
+<div class="toast" id="toast">✅ CSV 已下載，請上傳給 Claude 分析！</div>
+<script>
+const ITEMS = ["補牙","根管治療","假牙製作","手術","拔智齒","洗牙","矯正","植牙","其他"];
+const SHIFTS = { morning:'早診', afternoon:'午診', evening:'晚診' };
+const PAY_OPTS = ['自費','健保','混合'];
+const STORAGE_KEY = 'dental_jan_v2';
+let sessions = [];
+let sId = 0, rId = 0;
+let saveTimer = null;
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ sessions, sId, rId })); } catch(e) {}
+  const ind = document.getElementById('saveIndicator');
+  const lbl = document.getElementById('saveLabel');
+  if (!ind) return;
+  ind.classList.add('saved');
+  lbl.textContent = '已自動儲存';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { ind.classList.remove('saved'); lbl.textContent = '資料已保存'; }, 2000);
+}
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    sessions = data.sessions || [];
+    sId = data.sId || 0;
+    rId = data.rId || 0;
+    return sessions.length > 0;
+  } catch(e) { return false; }
+}
+function clearAll() {
+  if (!confirm('確定要清除所有資料嗎？此動作無法復原。')) return;
+  sessions = []; sId = 0; rId = 0;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('.session').forEach(el => el.remove());
+  updateStats();
+  const lbl = document.getElementById('saveLabel');
+  if (lbl) lbl.textContent = '資料已清除';
+}
+function addSession() {
+  const id = ++sId;
+  const dateStr = new Date().toISOString().split('T')[0];
+  sessions.push({ id, date: dateStr, shift: '', records: [] });
+  renderAll();
+  setTimeout(() => document.getElementById(`session-${id}`)?.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+  addRecord(id);
+  save();
+}
+function deleteSession(id) {
+  if (!confirm('確定刪除這個診次及其所有記錄？')) return;
+  sessions = sessions.filter(s => s.id !== id);
+  renderAll();
+  save();
+}
+function setShift(sid, shift) {
+  const s = sessions.find(s => s.id === sid);
+  if (s) s.shift = shift;
+  const hdr = document.getElementById(`session-${sid}`)?.querySelector('.session-header');
+  if (hdr) {
+    hdr.className = 'session-header ' + (shift || 'unset');
+    hdr.querySelector('.shift-badge').textContent = SHIFTS[shift] || '未選時段';
+  }
+  ['morning','afternoon','evening'].forEach(k => {
+    document.getElementById(`chip-${k}-${sid}`)?.classList.toggle('sel', k === shift);
+  });
+  updateStats();
+  save();
+}
+function setDate(sid, val) {
+  const s = sessions.find(s => s.id === sid);
+  if (s) s.date = val;
+  updateSessionMeta(sid);
+  updateStats();
+  save();
+}
+function addRecord(sid) {
+  const s = sessions.find(s => s.id === sid);
+  if (!s) return;
+  const id = ++rId;
+  s.records.push({ id, item:'', pay:'', mins:'', income:'', patients:1, visit:'' });
+  renderRecords(sid);
+  updateStats();
+  save();
+}
+function deleteRecord(sid, rid) {
+  const s = sessions.find(s => s.id === sid);
+  if (!s) return;
+  s.records = s.records.filter(r => r.id !== rid);
+  renderRecords(sid);
+  updateStats();
+  save();
+}
+function updateRecord(sid, rid, field, value) {
+  const s = sessions.find(s => s.id === sid);
+  if (!s) return;
+  const r = s.records.find(r => r.id === rid);
+  if (r) r[field] = value;
+  if (field === 'income' || field === 'mins') updateStats();
+  updateSessionMeta(sid);
+  save();
+}
+function updateSessionMeta(sid) {
+  const s = sessions.find(s => s.id === sid);
+  if (!s) return;
+  const countEl = document.getElementById(`count-${sid}`);
+  const incEl = document.getElementById(`inc-${sid}`);
+  if (!countEl) return;
+  const total = s.records.reduce((a,r) => a + (parseFloat(r.income)||0), 0);
+  countEl.textContent = `${s.date||'未選日期'} ${SHIFTS[s.shift]||'未選時段'} · ${s.records.length} 筆`;
+  if (incEl) incEl.textContent = total ? '$' + total.toLocaleString() : '';
+}
+function updateStats() {
+  let total=0, income=0, mins=0;
+  sessions.forEach(s => s.records.forEach(r => {
+    total++; income += parseFloat(r.income)||0; mins += parseFloat(r.mins)||0;
+  }));
+  document.getElementById('sTotal').textContent = total;
+  document.getElementById('sIncome').textContent = '$' + income.toLocaleString();
+  document.getElementById('sHours').textContent = mins>=60 ? (mins/60).toFixed(1)+'h' : mins+'m';
+  document.getElementById('sSessions').textContent = sessions.length;
+  document.getElementById('emptyState').style.display = sessions.length ? 'none' : 'block';
+}
+function renderAll() {
+  sessions.forEach(s => { if (!document.getElementById(`session-${s.id}`)) renderSession(s); });
+  document.querySelectorAll('.session').forEach(el => {
+    if (!sessions.find(s => s.id == el.dataset.sid)) el.remove();
+  });
+  updateStats();
+}
+function renderSession(s) {
+  const container = document.getElementById('sessionsContainer');
+  const div = document.createElement('div');
+  div.className = 'session'; div.dataset.sid = s.id; div.id = `session-${s.id}`;
+  div.innerHTML = `
+    <div class="session-header ${s.shift||'unset'}" id="hdr-${s.id}">
+      <div class="shift-badge">${SHIFTS[s.shift]||'未選時段'}</div>
+      <div class="session-meta">
+        <div class="session-date">${s.date||'未選日期'}</div>
+        <div class="session-count" id="count-${s.id}">${s.records.length} 筆</div>
+      </div>
+      <div class="session-income" id="inc-${s.id}"></div>
+      <button class="session-del" onclick="deleteSession(${s.id})">×</button>
+    </div>
+    <div class="session-setup">
+      <div class="setup-row">
+        <div class="setup-field">
+          <label>日期</label>
+          <input type="date" value="${s.date}" onchange="setDate(${s.id},this.value)">
+        </div>
+        <div class="setup-field">
+          <label>時段</label>
+          <div class="shift-chips">
+            <div class="shift-chip morning ${s.shift==='morning'?'sel':''}" id="chip-morning-${s.id}" onclick="setShift(${s.id},'morning')">☀️ 早診</div>
+            <div class="shift-chip afternoon ${s.shift==='afternoon'?'sel':''}" id="chip-afternoon-${s.id}" onclick="setShift(${s.id},'afternoon')">🌤 午診</div>
+            <div class="shift-chip evening ${s.shift==='evening'?'sel':''}" id="chip-evening-${s.id}" onclick="setShift(${s.id},'evening')">🌙 晚診</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-label" style="padding:10px 18px 4px">
+      <div class="rec-labels">
+        <span>治療項目</span><span>自費/健保</span><span>時長(分鐘)</span><span>收入(元)</span><span>人次</span><span>初/複診</span><span></span>
+      </div>
+    </div>
+    <div class="session-records" id="records-${s.id}"></div>
+    <button class="add-rec-btn" onclick="addRecord(${s.id})">＋ 新增治療項目</button>
+  `;
+  container.appendChild(div);
+  renderRecords(s.id);
+}
+function renderRecords(sid) {
+  const s = sessions.find(s => s.id === sid);
+  const container = document.getElementById(`records-${sid}`);
+  if (!s || !container) return;
+  container.innerHTML = '';
+  s.records.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'record-row'; row.id = `rec-${r.id}`;
+    row.innerHTML = `
+      <select class="rec" onchange="updateRecord(${sid},${r.id},'item',this.value)">
+        <option value="">選擇項目…</option>
+        ${ITEMS.map(it => `<option value="${it}" ${r.item===it?'selected':''}>${it}</option>`).join('')}
+      </select>
+      <select class="rec ${r.pay==='自費'?'pay-self':r.pay==='健保'?'pay-ins':''}"
+        onchange="this.className='rec '+(this.value==='自費'?'pay-self':this.value==='健保'?'pay-ins':'');updateRecord(${sid},${r.id},'pay',this.value)">
+        <option value="">費用…</option>
+        ${PAY_OPTS.map(p=>`<option value="${p}" ${r.pay===p?'selected':''}>${p}</option>`).join('')}
+      </select>
+      <input class="rec" type="number" min="1" placeholder="分鐘" value="${r.mins}"
+        oninput="updateRecord(${sid},${r.id},'mins',this.value)">
+      <input class="rec" type="number" min="0" placeholder="金額" value="${r.income}"
+        oninput="updateRecord(${sid},${r.id},'income',this.value)">
+      <input class="rec" type="number" min="1" value="${r.patients||1}" style="text-align:center"
+        oninput="updateRecord(${sid},${r.id},'patients',this.value)">
+      <select class="rec" onchange="updateRecord(${sid},${r.id},'visit',this.value)">
+        <option value="">－</option>
+        <option value="初診" ${r.visit==='初診'?'selected':''}>初診</option>
+        <option value="複診" ${r.visit==='複診'?'selected':''}>複診</option>
+      </select>
+      <button class="del-rec" onclick="deleteRecord(${sid},${r.id})">×</button>
+    `;
+    container.appendChild(row);
+  });
+  updateSessionMeta(sid);
+}
+function exportCSV() {
+  const rows = [];
+  sessions.forEach(s => s.records.forEach(r => {
+    rows.push([s.date, SHIFTS[s.shift]||'', r.item, r.pay, r.mins, r.income, r.patients||1, r.visit]);
+  }));
+  if (!rows.length) { alert('請先新增至少一筆記錄！'); return; }
+  const headers = ['日期','時段','治療項目','自費/健保','工作時長(分鐘)','收入(元)','病患人次','初診/複診'];
+  const csv = '\uFEFF' + [headers,...rows].map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download = '牙醫一月業績資料.csv'; a.click();
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 3000);
+}
+if (loadFromStorage()) {
+  renderAll();
+  sessions.forEach(s => {
+    if (s.shift) setShift(s.id, s.shift);
+    updateSessionMeta(s.id);
+  });
+  const lbl = document.getElementById('saveLabel');
+  if (lbl) lbl.textContent = `已載入 ${sessions.length} 個診次`;
+}
+</script>
+</body>
+</html>
