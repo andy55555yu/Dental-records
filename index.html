@@ -318,31 +318,26 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
       <label>📅 月份</label>
       <select class="clinic-select" id="selMonth" onchange="updateContext()">
         <option value="">請選擇月份…</option>
-        <option value="2025-01">2025年 1月</option>
-        <option value="2025-02">2025年 2月</option>
-        <option value="2025-03">2025年 3月</option>
-        <option value="2025-04">2025年 4月</option>
-        <option value="2025-05">2025年 5月</option>
-        <option value="2025-06">2025年 6月</option>
-        <option value="2025-07">2025年 7月</option>
-        <option value="2025-08">2025年 8月</option>
-        <option value="2025-09">2025年 9月</option>
-        <option value="2025-10">2025年10月</option>
-        <option value="2025-11">2025年11月</option>
-        <option value="2025-12">2025年12月</option>
         <option value="2026-01">2026年 1月</option>
         <option value="2026-02">2026年 2月</option>
         <option value="2026-03">2026年 3月</option>
+        <option value="2026-04">2026年 4月</option>
+        <option value="2026-05">2026年 5月</option>
+        <option value="2026-06">2026年 6月</option>
+        <option value="2026-07">2026年 7月</option>
+        <option value="2026-08">2026年 8月</option>
+        <option value="2026-09">2026年 9月</option>
+        <option value="2026-10">2026年10月</option>
+        <option value="2026-11">2026年11月</option>
+        <option value="2026-12">2026年12月</option>
       </select>
     </div>
     <div class="clinic-field">
       <label>🏥 診所</label>
       <select class="clinic-select" id="selClinic" onchange="updateContext()">
         <option value="">請選擇診所…</option>
-        <option value="診所A">診所A</option>
-        <option value="診所B">診所B</option>
-        <option value="診所C">診所C</option>
-        <option value="自行輸入">自行輸入</option>
+        <option value="樂沛">樂沛</option>
+        <option value="樂陽">樂陽</option>
       </select>
     </div>
     <div class="clinic-field" id="customClinicField" style="display:none">
@@ -411,9 +406,9 @@ function updateContext() {
 
   if (clinicEl.value === '自行輸入') {
     customField.style.display = 'flex';
-    currentClinic = customInput.value.trim() || '';
+    currentClinic = customInput?.value.trim() || '';
   } else {
-    customField.style.display = 'none';
+    if (customField) customField.style.display = 'none';
     currentClinic = clinicEl.value;
   }
 
