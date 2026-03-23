@@ -155,7 +155,7 @@ body {
 
 .record-row {
   display: grid;
-  grid-template-columns: 1fr 90px 110px 90px 70px 80px 32px;
+  grid-template-columns: 1fr 90px 140px 90px 70px 32px;
   gap: 8px;
   align-items: center;
   padding: 10px 18px;
@@ -166,7 +166,7 @@ body {
 .record-row:last-child { border-bottom: none; }
 
 .rec-label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; padding:8px 18px 0; }
-.rec-labels { display:grid; grid-template-columns:1fr 90px 110px 90px 70px 80px 32px; gap:8px; }
+.rec-labels { display:grid; grid-template-columns:1fr 90px 140px 90px 70px 32px; gap:8px; }
 
 input.rec, select.rec {
   background: var(--input-bg);
@@ -296,8 +296,8 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
 .empty-icon { font-size:36px; margin-bottom:10px; opacity:.4; }
 
 @media(max-width:600px){
-  .record-row { grid-template-columns:1fr 80px 90px 80px 60px 70px 28px; gap:6px; padding:8px 12px; }
-  .rec-labels  { grid-template-columns:1fr 80px 90px 80px 60px 70px 28px; }
+  .record-row { grid-template-columns:1fr 80px 130px 80px 60px 28px; gap:6px; padding:8px 12px; }
+  .rec-labels  { grid-template-columns:1fr 80px 130px 80px 60px 28px; }
   .stats-bar { grid-template-columns:repeat(2,1fr); }
   .session-setup { padding:14px 12px; }
   .setup-field input { width:130px; }
@@ -385,8 +385,7 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
 const ITEMS = [
   "補牙","根管治療",
   "假牙-印模","假牙-裝戴","臨時假牙",
-  "手術","拔智齒","洗牙",
-  "牙周治療P1","牙周治療P2","牙周治療P3",
+  "拔智齒","洗牙","牙周治療",
   "植牙-手術","植牙-二階","植牙-假牙印模","植牙-假牙裝戴",
   "膠原蛋白","PRF","其他"
 ];
@@ -631,7 +630,7 @@ function renderSession(s) {
     </div>
     <div class="rec-label" style="padding:10px 18px 4px">
       <div class="rec-labels">
-        <span>治療項目</span><span>自費/健保</span><span>時長(分鐘)</span><span>收入(元)</span><span>牙齒數</span><span>初/複診</span><span></span>
+        <span>治療項目</span><span>自費/健保</span><span>時長(分鐘)</span><span>收入(元)</span><span>牙齒數</span><span></span>
       </div>
     </div>
     <div class="session-records" id="records-${s.id}"></div>
@@ -650,26 +649,44 @@ function renderRecords(sid) {
     const row = document.createElement('div');
     row.className = 'record-row'; row.id = `rec-${r.id}`;
     row.innerHTML = `
-      <select class="rec" onchange="updateRecord(${sid},${r.id},'item',this.value)">
-        <option value="">選擇項目…</option>
-        ${ITEMS.map(it => `<option value="${it}" ${r.item===it?'selected':''}>${it}</option>`).join('')}
-      </select>
+      <div style="display:flex;gap:4px;align-items:center;">
+        <select class="rec" style="flex:1" onchange="
+          const custom=document.getElementById('item-custom-${r.id}');
+          if(this.value==='其他'){custom.style.display='block';}
+          else{custom.style.display='none';updateRecord(${sid},${r.id},'item',this.value);}
+        ">
+          <option value="">選擇項目…</option>
+          ${ITEMS.map(it => `<option value="${it}" ${r.item===it||(it==='其他'&&r.item&&!ITEMS.slice(0,-1).includes(r.item))?'selected':''}>${it}</option>`).join('')}
+        </select>
+        <input id="item-custom-${r.id}" class="rec" type="text" placeholder="輸入項目…"
+          style="width:80px;display:${r.item&&!ITEMS.slice(0,-1).includes(r.item)?'block':'none'}"
+          value="${r.item&&!ITEMS.slice(0,-1).includes(r.item)?r.item:''}"
+          oninput="updateRecord(${sid},${r.id},'item',this.value)">
+      </div>
       <select class="rec ${r.pay==='自費'?'pay-self':r.pay==='健保'?'pay-ins':''}"
         onchange="this.className='rec '+(this.value==='自費'?'pay-self':this.value==='健保'?'pay-ins':'');updateRecord(${sid},${r.id},'pay',this.value)">
         <option value="">費用…</option>
         ${PAY_OPTS.map(p=>`<option value="${p}" ${r.pay===p?'selected':''}>${p}</option>`).join('')}
       </select>
-      <input class="rec" type="number" min="0" placeholder="分鐘" value="${r.mins}"
-        oninput="updateRecord(${sid},${r.id},'mins',this.value)">
+      <div style="display:flex;gap:4px;align-items:center;">
+        <select class="rec" style="flex:1" onchange="
+          const custom=document.getElementById('mins-custom-${r.id}');
+          if(this.value==='其他'){custom.style.display='block';updateRecord(${sid},${r.id},'mins',custom.value);}
+          else{custom.style.display='none';updateRecord(${sid},${r.id},'mins',this.value);}
+        ">
+          <option value="">分鐘…</option>
+          ${[15,20,30,45,60,75,90,120].map(m=>`<option value="${m}" ${r.mins==m&&r.mins!==''?'selected':''}>${m}分</option>`).join('')}
+          <option value="其他" ${r.mins&&![15,20,30,45,60,75,90,120].includes(Number(r.mins))?'selected':''}>其他</option>
+        </select>
+        <input id="mins-custom-${r.id}" class="rec" type="number" min="1" placeholder="分鐘"
+          style="width:60px;display:${r.mins&&![15,20,30,45,60,75,90,120].includes(Number(r.mins))&&r.mins!==''?'block':'none'}"
+          value="${r.mins&&![15,20,30,45,60,75,90,120].includes(Number(r.mins))?r.mins:''}"
+          oninput="updateRecord(${sid},${r.id},'mins',this.value)">
+      </div>
       <input class="rec" type="number" min="0" placeholder="金額" value="${r.income}"
         oninput="updateRecord(${sid},${r.id},'income',this.value)">
       <input class="rec" type="number" min="0" placeholder="顆數" value="${r.teeth}"
         style="text-align:center" oninput="updateRecord(${sid},${r.id},'teeth',this.value)">
-      <select class="rec" onchange="updateRecord(${sid},${r.id},'visit',this.value)">
-        <option value="">－</option>
-        <option value="初診" ${r.visit==='初診'?'selected':''}>初診</option>
-        <option value="複診" ${r.visit==='複診'?'selected':''}>複診</option>
-      </select>
       <button class="del-rec" onclick="deleteRecord(${sid},${r.id})">×</button>
     `;
     container.appendChild(row);
@@ -681,10 +698,10 @@ function renderRecords(sid) {
 function exportCSV() {
   const rows = [];
   sessions.forEach(s => s.records.forEach(r => {
-    rows.push([currentMonth, currentClinic, s.date, SHIFTS[s.shift]||'', r.item, r.pay, r.mins, r.income, r.teeth||'', r.visit]);
+    rows.push([currentMonth, currentClinic, s.date, SHIFTS[s.shift]||'', r.item, r.pay, r.mins, r.income, r.teeth||'']);
   }));
   if (!rows.length) { alert('請先新增至少一筆記錄！'); return; }
-  const headers = ['月份','診所','日期','時段','治療項目','自費/健保','工作時長(分鐘)','收入(元)','牙齒數目','初診/複診'];
+  const headers = ['月份','診所','日期','時段','治療項目','自費/健保','工作時長(分鐘)','收入(元)','牙齒數目'];
   const csv = '\uFEFF' + [headers,...rows].map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
   const filename = [currentMonth, currentClinic, '看診業績'].filter(Boolean).join('_') + '.csv';
