@@ -384,14 +384,15 @@ select.rec.pay-ins  { border-color: rgba(0,144,212,.5); color: var(--accent2); }
 <script>
 const ITEMS = [
   "補牙","根管治療",
-  "假牙-印模","假牙-裝戴",
-  "手術","拔智齒","洗牙","矯正",
+  "假牙-印模","假牙-裝戴","臨時假牙",
+  "手術","拔智齒","洗牙",
+  "牙周治療P1","牙周治療P2","牙周治療P3",
   "植牙-手術","植牙-二階","植牙-假牙印模","植牙-假牙裝戴",
   "膠原蛋白","PRF","其他"
 ];
 const SHIFTS = { morning:'早診', afternoon:'午診', evening:'晚診' };
 const PAY_OPTS = ['自費','健保','混合'];
-const STORAGE_KEY = 'dental_records_v3';
+const STORAGE_KEY = 'dental_jan_v2';
 
 let sessions = [], sId = 0, rId = 0, saveTimer = null;
 let currentMonth = '', currentClinic = '';
